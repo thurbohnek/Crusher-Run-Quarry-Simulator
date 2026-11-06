@@ -774,6 +774,22 @@
   }
   $('fSl').oninput = () => { if (!save) return; feedFlag(); save.feedMm = +$('fSl').value; feedUi(); };
   $('fSl').onchange = () => { if (save) Career.store(save); };
+  // the whole slider box takes the finger: touch anywhere on it (or slide in from beside the knob)
+  // and the knob jumps to the finger and follows it
+  {
+    const box = $('fSlW'), sl = $('fSl');
+    let drag = null;
+    const setFrom = (e) => {
+      const r = sl.getBoundingClientRect(), pad = r.width * 0.11;   // the rotated input: its height on screen is the track
+      const t = clamp((r.bottom - pad - e.clientY) / Math.max(1, r.height - 2 * pad), 0, 1);
+      const v = Math.round(t * 420 / 5) * 5;
+      if (+sl.value !== v || drag.first) { drag.first = false; sl.value = v; sl.oninput(); }
+    };
+    box.addEventListener('pointerdown', (e) => { if (!save || !vfd()) return; e.preventDefault(); e.stopPropagation(); drag = { id: e.pointerId, first: true }; try { box.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); });
+    box.addEventListener('pointermove', (e) => { if (!drag || e.pointerId !== drag.id) return; e.preventDefault(); setFrom(e); });
+    const end = (e) => { if (!drag || e.pointerId !== drag.id) return; drag = null; sl.onchange(); };
+    box.addEventListener('pointerup', end); box.addEventListener('pointercancel', end);
+  }
   const feedFlag = () => { if (save && mode === 'shift' && save.goals) save.goals.flags.feed = 1; };
   $('fMinus').onclick = () => { if (!save) return; feedFlag(); if (vfd()) { save.feedMm = Math.max(0, Sim.feedMm(save) - 10); feedUi(); return; } save.feedLv = Math.max(0, (save.feedLv ?? 3) - 1); feedUi(); hint('feed', 'The feeder sets how fast rock goes into the jaw. Keep the chamber full without the ammeter going into the red.'); };
   $('fPlus').onclick = () => { if (!save) return; feedFlag(); if (vfd()) { save.feedMm = Math.min(420, Sim.feedMm(save) + 10); feedUi(); return; } save.feedLv = Math.min(5, (save.feedLv ?? 3) + 1); feedUi(); hint('feed', 'The feeder sets how fast rock goes into the jaw. Keep the chamber full without the ammeter going into the red.'); };

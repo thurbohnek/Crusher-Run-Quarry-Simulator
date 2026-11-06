@@ -45,7 +45,8 @@ button{font-family:inherit;color:inherit}
 #fSpd{display:inline-block;width:calc(var(--u)*120);white-space:nowrap}
 .fslw{position:relative;width:calc(var(--u)*44);height:calc(var(--u)*300);flex-shrink:0}
 .gauge.fslbox{padding:calc(var(--u)*10) calc(var(--u)*4)}
-.fslw input.fsl{position:absolute;left:calc(var(--u)*-128);top:calc(var(--u)*128);width:calc(var(--u)*300);height:calc(var(--u)*44);transform:rotate(-90deg);accent-color:#f2a51e;margin:0;touch-action:none;cursor:pointer}
+.fslw input.fsl{position:absolute;left:calc(var(--u)*-128);top:calc(var(--u)*128);width:calc(var(--u)*300);height:calc(var(--u)*44);transform:rotate(-90deg);accent-color:#f2a51e;margin:0;touch-action:none;cursor:pointer;pointer-events:none}
+.gauge.fslbox{touch-action:none;cursor:pointer}
 .fsl.hidden,.fc.hidden{display:none}
 .gchip{font-size:calc(var(--u)*15);letter-spacing:.06em;color:#8fc46a;font-weight:700}
 .gchip.hot{color:#ffb3a3}

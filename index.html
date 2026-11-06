@@ -45,7 +45,8 @@ button{font-family:inherit;color:inherit}
 #fSpd{display:inline-block;width:calc(var(--u)*120);white-space:nowrap}
 .fslw{position:relative;width:calc(var(--u)*44);height:calc(var(--u)*300);flex-shrink:0}
 .gauge.fslbox{padding:calc(var(--u)*10) calc(var(--u)*4)}
-.fslw input.fsl{position:absolute;left:calc(var(--u)*-128);top:calc(var(--u)*128);width:calc(var(--u)*300);height:calc(var(--u)*44);transform:rotate(-90deg);accent-color:#f2a51e;margin:0;touch-action:none;cursor:pointer}
+.fslw input.fsl{position:absolute;left:calc(var(--u)*-128);top:calc(var(--u)*128);width:calc(var(--u)*300);height:calc(var(--u)*44);transform:rotate(-90deg);accent-color:#f2a51e;margin:0;touch-action:none;cursor:pointer;pointer-events:none}
+.gauge.fslbox{touch-action:none;cursor:pointer}
 .fsl.hidden,.fc.hidden{display:none}
 .gchip{font-size:calc(var(--u)*15);letter-spacing:.06em;color:#8fc46a;font-weight:700}
 .gchip.hot{color:#ffb3a3}
@@ -6379,6 +6380,22 @@ const Render = (() => {
   }
   $('fSl').oninput = () => { if (!save) return; feedFlag(); save.feedMm = +$('fSl').value; feedUi(); };
   $('fSl').onchange = () => { if (save) Career.store(save); };
+  // the whole slider box takes the finger: touch anywhere on it (or slide in from beside the knob)
+  // and the knob jumps to the finger and follows it
+  {
+    const box = $('fSlW'), sl = $('fSl');
+    let drag = null;
+    const setFrom = (e) => {
+      const r = sl.getBoundingClientRect(), pad = r.width * 0.11;   // the rotated input: its height on screen is the track
+      const t = clamp((r.bottom - pad - e.clientY) / Math.max(1, r.height - 2 * pad), 0, 1);
+      const v = Math.round(t * 420 / 5) * 5;
+      if (+sl.value !== v || drag.first) { drag.first = false; sl.value = v; sl.oninput(); }
+    };
+    box.addEventListener('pointerdown', (e) => { if (!save || !vfd()) return; e.preventDefault(); e.stopPropagation(); drag = { id: e.pointerId, first: true }; try { box.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); });
+    box.addEventListener('pointermove', (e) => { if (!drag || e.pointerId !== drag.id) return; e.preventDefault(); setFrom(e); });
+    const end = (e) => { if (!drag || e.pointerId !== drag.id) return; drag = null; sl.onchange(); };
+    box.addEventListener('pointerup', end); box.addEventListener('pointercancel', end);
+  }
   const feedFlag = () => { if (save && mode === 'shift' && save.goals) save.goals.flags.feed = 1; };
   $('fMinus').onclick = () => { if (!save) return; feedFlag(); if (vfd()) { save.feedMm = Math.max(0, Sim.feedMm(save) - 10); feedUi(); return; } save.feedLv = Math.max(0, (save.feedLv ?? 3) - 1); feedUi(); hint('feed', 'The feeder sets how fast rock goes into the jaw. Keep the chamber full without the ammeter going into the red.'); };
   $('fPlus').onclick = () => { if (!save) return; feedFlag(); if (vfd()) { save.feedMm = Math.min(420, Sim.feedMm(save) + 10); feedUi(); return; } save.feedLv = Math.min(5, (save.feedLv ?? 3) + 1); feedUi(); hint('feed', 'The feeder sets how fast rock goes into the jaw. Keep the chamber full without the ammeter going into the red.'); };
