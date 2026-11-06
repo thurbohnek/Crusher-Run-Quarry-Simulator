@@ -2321,7 +2321,7 @@ class Sim {
     const P = Sim.BLAST[save.blastPlan || 'normal'] || Sim.BLAST.normal, el = save.up && save.up.blast;
     const n = P.n || 1.4; return { f: P.f * (el ? 0.92 : 1), n: el ? n + 0.5 : n, kr: P.kr + (el ? 3 : 0), maxMm: Math.pow(Sim.truckBuckets(save.up && save.up.loader) * 4.5 * Math.pow(0.36 * Sim.QUARRY, 2) * Sim.FILLREF * 0.6, 0.4) };
   }
-  static truckBuckets(lv) { return [12, 30, 48][lv || 0]; }
+  static truckBuckets(lv) { return [24, 60, 96][lv || 0]; }
   // minutes of haul from the bench and back, as game seconds; a second truck waits ready while the first is away
   static haulTime(save) { const u = save.up || {}; let h = [2.6, 3.0, 3.4][u.loader || 0]; if (u.truck2) h *= 0.3; if (save.plant === 'mobile') h *= 0.55; return h; }
   dump(items, steel) {
@@ -2809,7 +2809,7 @@ class Sim {
     // stones under ~14 px across are too small to matter as bodies here: they ride along as grit in the fines stream
     let gritKg = 0;
     const all = [];
-    const gritMm = Math.max(14 * mm, (this.save.css || 80) * 0.55);   // these pass the jaw without being touched
+    const gritMm = Math.max(14 * mm, (this.save.css || 80) * 0.7);   // these pass the jaw without being touched
     for (const it of items) { if (it.mm < gritMm && !it.mat.steel) gritKg += Rocks.props(Rocks.genBlockPoly(it.mm / 2 / mm, it.mat, this.rng, 0), it.mat, mm).mass; else all.push({ mm: it.mm, mat: it.mat }); }
     if (steel) all.push({ mm: 0, mat: MATS.steel });
     for (const it of all) {
