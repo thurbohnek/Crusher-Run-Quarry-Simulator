@@ -1,5 +1,7 @@
 # Crusher Run: Quarry Simulator
 
+© 2026 Ørjan Grane (Studio.grane). All rights reserved. See [LICENSE](LICENSE).
+
 A 2D side-view quarry game by Studio.grane. Run a jaw crusher with realistic rock physics: tip loads from the bench, break oversize blocks, keep the motor out of the red and sell crushed aggregate.
 
 ## Play
@@ -40,3 +42,15 @@ node test/balance_test.js   # mass balance
 node test/err.js            # page errors
 node test/perf_browser.js   # frame and step times
 ```
+
+## Copyright and licence
+
+Copyright © 2026 Ørjan Grane (Studio.grane). All rights reserved.
+
+This is **not** open-source software. The code is published here for viewing
+only. You may not copy, modify, redistribute or publish the game, its code or
+its assets without written permission. See [LICENSE](LICENSE) for the full
+terms and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the fonts the
+game uses.
+
+Permissions and enquiries: studio.grane@gmail.com
