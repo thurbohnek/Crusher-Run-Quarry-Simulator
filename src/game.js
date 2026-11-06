@@ -822,7 +822,11 @@
       if (!r.ok) { if (r.why === 'running') { toast('Stop and lock out the crusher before going into the jaw with the pry bar.', 3400, 'bad'); sim.emit('deny'); } return; }
     } else if (tool === 'lift') {
       const r = sim.liftStart(p.x, p.y);
-      if (!r.ok) { if (r.why === 'running') { toast('Never lift out of a running jaw. Stop the crusher first.', 3400, 'bad'); sim.emit('deny'); } }
+      if (!r.ok) {
+        if (r.why === 'running') { toast('Never lift out of a running jaw. Stop the crusher first.', 3400, 'bad'); sim.emit('deny'); }
+        else if (r.why === 'deep') { toast('Too deep for a chain: there is no room to get it round a block down between the plates. Break it' + (sim.up.breaker ? ' with the breaker' : ' with the sledge') + ', lever it with the pry bar, or stop and ' + (sim.up.hydro ? 'open the setting' : 'take out the shims') + ' so the chamber drops.', 4800, 'bad'); sim.emit('deny'); }
+        else if (r.why === 'covered') { toast('Another stone lies on top of it. Lift the top one first.', 2600); sim.emit('deny'); }
+      }
       else hint('lift', 'The chain hooks the block onto the hoist. Take the top ones first so the rest don\'t lock up.');
       return;
     }

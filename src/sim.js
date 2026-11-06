@@ -788,6 +788,12 @@ class Sim {
     const s = this.world.pointQuery(x, y, sh => !!sh.body.rock)[0] || this.world.pointQuery(x, y + 10, sh => !!sh.body.rock)[0];
     if (!s) return { ok: false, why: 'none' };
     const b = s.body; const lp = b.toLocal(x, y);
+    // A chain has to go round the block: only a stone in the mouth, with its top free, can be slung.
+    // Down in the chamber there is no room for a chain between the plates.
+    const G = Machine.G, r = b.rock.rad || 30, top = b.y - r;
+    const inMouth = b.x < G.FX + 30 && b.y > G.TOP - 40;
+    if (inMouth && top > G.TOP + (G.BOT - G.TOP) * 0.28) return { ok: false, why: 'deep' };
+    if (inMouth) for (const o of this.rocks) { if (o === b || !o.rock || o.rock.passed) continue; const orr = o.rock.rad || 20; if (o.y < b.y - r * 0.4 && Math.abs(o.x - b.x) < r * 0.8 + orr * 0.5 && o.y + orr > top - 4) return { ok: false, why: 'covered' }; }
     this.lift = { b, lx: lp.x, ly: lp.y, hx: x, ax: x, ay: y, t: 0 };
     this.emit('chain');
     return { ok: true };
