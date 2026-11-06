@@ -1,4 +1,9 @@
 'use strict';
+/*
+ * Crusher Run: Quarry Simulator
+ * Copyright (c) 2026 Ørjan Grane (Studio.grane). All rights reserved.
+ * Proprietary software. See LICENSE. Unauthorised copying, modification or distribution is prohibited.
+ */
 /* ============================================================
    render.js — canvas renderer.
    Static art (sky, quarry, machine frame) is cached per day;

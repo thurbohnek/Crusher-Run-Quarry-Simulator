@@ -1,4 +1,9 @@
 'use strict';
+/*
+ * Crusher Run: Quarry Simulator
+ * Copyright (c) 2026 Ørjan Grane (Studio.grane). All rights reserved.
+ * Proprietary software. See LICENSE. Unauthorised copying, modification or distribution is prohibited.
+ */
 /* ============================================================
    sim.js — the crusher world: physics, rocks, fines, feeding,
    the operator's tools, delivery and the day's measurements.

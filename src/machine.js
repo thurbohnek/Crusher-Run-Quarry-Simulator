@@ -1,4 +1,9 @@
 'use strict';
+/*
+ * Crusher Run: Quarry Simulator
+ * Copyright (c) 2026 Ørjan Grane (Studio.grane). All rights reserved.
+ * Proprietary software. See LICENSE. Unauthorised copying, modification or distribution is prohibited.
+ */
 /* ============================================================
    machine.js — single-toggle jaw crusher.
    Real geometry: fixed jaw vertical, swing jaw hung on an eccentric

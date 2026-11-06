@@ -1,4 +1,9 @@
 'use strict';
+/*
+ * Crusher Run: Quarry Simulator
+ * Copyright (c) 2026 Ørjan Grane (Studio.grane). All rights reserved.
+ * Proprietary software. See LICENSE. Unauthorised copying, modification or distribution is prohibited.
+ */
 /* ============================================================
    audio.js — all sound is synthesised, no samples.
    Impacts use modal synthesis (damped resonators + contact click,

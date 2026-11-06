@@ -1,4 +1,9 @@
 'use strict';
+/*
+ * Crusher Run: Quarry Simulator
+ * Copyright (c) 2026 Ørjan Grane (Studio.grane). All rights reserved.
+ * Proprietary software. See LICENSE. Unauthorised copying, modification or distribution is prohibited.
+ */
 /* ============================================================
    phys.js — a small 2D rigid body engine for convex polygons
    Box2D-style: SAT + reference-face clipping manifolds, persistent

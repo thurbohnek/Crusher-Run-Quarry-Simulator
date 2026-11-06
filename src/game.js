@@ -1,4 +1,9 @@
 'use strict';
+/*
+ * Crusher Run: Quarry Simulator
+ * Copyright (c) 2026 Ørjan Grane (Studio.grane). All rights reserved.
+ * Proprietary software. See LICENSE. Unauthorised copying, modification or distribution is prohibited.
+ */
 /* ============================================================
    game.js — screens, operator controls, the shift loop.
    ============================================================ */
@@ -175,7 +180,8 @@
         <button class="btn" id="bBook">Handbook</button>
         <button class="btn" id="bSet">Settings</button>
         <button class="btn sm" id="bSnd">${(save ? save.sound : true) ? 'Sound on' : 'Sound off'}</button>
-      </div></div>`;
+      </div>
+      <div class="copy">© 2026 Studio.grane · All rights reserved</div></div>`;
     if (cont) $('bCont').onclick = () => { Sound.init(); Sound.setOn(save.sound); office(); };
     $('bNew').onclick = () => { Sound.init(); newCompany(); };
     $('bBook').onclick = () => { Sound.init(); handbook(() => title()); };
@@ -512,7 +518,9 @@
       <h3>Phone</h3>
       <div class="row">${document.fullscreenEnabled ? `<button class="btn sm" id="sFull">${document.fullscreenElement ? 'Leave full screen' : 'Full screen'}</button>` : ''}<button class="btn sm ${save && save.haptics === false ? '' : 'pri'}" id="sHap">${save && save.haptics === false ? 'Vibration off' : 'Vibration on'}</button></div>
       ${save ? `<h3>Help</h3><div class="row"><button class="btn sm" id="sTut">Show the tips again</button></div><p class="muted">Resets the one-time tips and the guided tour. Your milestones stay.</p>
-      <h3>Save</h3><div class="row"><button class="btn sm" id="sDel" style="border-color:var(--red)">Delete company</button></div><p class="muted" id="sDelTxt">Removes ${esc(save.company)} and everything it owns. Cannot be undone.</p>` : ''}`;
+      <h3>Save</h3><div class="row"><button class="btn sm" id="sDel" style="border-color:var(--red)">Delete company</button></div><p class="muted" id="sDelTxt">Removes ${esc(save.company)} and everything it owns. Cannot be undone.</p>` : ''}
+      <h3>About</h3>
+      <p class="muted">Crusher Run: Quarry Simulator · version ${GAME_VERSION}<br>© 2026 Ørjan Grane (Studio.grane). All rights reserved.<br>Code, graphics, sound and text may not be copied, modified or distributed without written permission. Contact: studio.grane@gmail.com</p>`;
   }
   function wireSettings(redraw) {
     document.querySelectorAll('[data-cur]').forEach(b => b.onclick = () => { fmt.setCur(b.dataset.cur); redraw(); });
@@ -613,6 +621,7 @@
       <p class="lead">${esc(save.company)} started with a used PE-400×600, a tractor and ${kr(140000)}. ${save.stats.days} working days later it has delivered ${tt(save.stats.totalT)} tonnes of crushed rock, filled ${save.stats.ordersDone || 0} orders and swung the sledgehammer ${save.stats.blows.toLocaleString('en-GB')} times.</p>
       <p class="lead">Every milestone is done. The quarry keeps running for as long as you want.</p>
       <p class="muted">Crusher Run: Quarry Simulator · design, physics and sound by studio.grane · thank you for playing</p>
+      <p class="muted">© 2026 Ørjan Grane (Studio.grane). All rights reserved.</p>
       <div class="row" style="justify-content:center"><button class="btn pri" id="bCred">Keep going</button></div></div>`;
     $('bCred').onclick = () => { tab = 'oversikt'; office(); };
   }

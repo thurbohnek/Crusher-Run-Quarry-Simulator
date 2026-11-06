@@ -1,4 +1,10 @@
 'use strict';
+/*
+ * Crusher Run: Quarry Simulator
+ * Copyright (c) 2026 Ørjan Grane (Studio.grane). All rights reserved.
+ * Proprietary software. See LICENSE. Unauthorised copying, modification or distribution is prohibited.
+ */
+const GAME_VERSION = '1.0.0';
 /* ============================================================
    util.js — math, seeded RNG, convex polygon helpers
    ============================================================ */
